@@ -2,14 +2,11 @@ package com.lyx.queue;
 
 import java.util.Scanner;
 
-/**
- * 数组模拟队列
- */
-public class ArrayQueueDemo
+public class CircleArrayQueueDemo
 {
 	public static void main(String[] args)
 	{
-		ArrayQueue queue = new ArrayQueue(3);
+		CircleArrayQueue queue = new CircleArrayQueue(4);
 
 		Scanner scanner = new Scanner(System.in);
 
@@ -74,24 +71,17 @@ public class ArrayQueueDemo
 	}
 }
 
-// 队列（数组模拟）
-class ArrayQueue
+class CircleArrayQueue
 {
 	private int maxSize; // 数组的最大容量
 	private int front; // 头指针
 	private int rear; // 尾指针
 	private int[] arr; // 用于存储数据，模拟的队列，就是它
 
-	/**
-	 * 创建队列构造器
-	 */
-	public ArrayQueue(int maxSize)
+	public CircleArrayQueue(int arrMaxSize)
 	{
-		this.maxSize = maxSize;
+		 maxSize = arrMaxSize;
 		arr = new int[maxSize];
-
-		front = -1; // front 指向队头元素的前一个位置，刚开始中没有元素，所以刚开始是-1
-		rear = -1; // rear 指向最后一个元素，刚开始中没有元素，所以也是-1
 	}
 
 	/**
@@ -100,7 +90,7 @@ class ArrayQueue
 	 */
 	public boolean isFull()
 	{
-		return rear == (maxSize-1);
+		return (rear+1) % maxSize == front;
 	}
 
 	/**
@@ -123,8 +113,8 @@ class ArrayQueue
 			return;
 		}
 
-		rear++;
 		arr[rear] = n;
+		rear = (rear+1) % maxSize; // rear后移必须考虑取模
 	}
 
 	/**
@@ -137,8 +127,10 @@ class ArrayQueue
 			throw new RuntimeException("队列为空，没法取数据");
 		}
 
-		front++;
-		return arr[front];
+		int value = arr[front];
+		front = (front+1) % maxSize;
+
+		return value;
 	}
 
 	/**
@@ -152,10 +144,11 @@ class ArrayQueue
 			return;
 		}
 
-		int begin = front + 1;
-		for (int i = begin; i <= rear; i++)
+		int count = (rear+maxSize-front) % maxSize; // 队列中元素的个数
+
+		for (int i = front; i <= front+count-1; i++)
 		{
-			System.out.println("arr["+i+"]" + " = " + arr[i]);
+			System.out.println("arr["+(i%maxSize)+"]" + " = " + arr[i%maxSize]);
 		}
 	}
 
@@ -169,9 +162,7 @@ class ArrayQueue
 			throw new RuntimeException("队列空");
 		}
 
-		int index = front + 1;
-
-		return arr[index];
+		return arr[front];
 	}
 
 	/**
