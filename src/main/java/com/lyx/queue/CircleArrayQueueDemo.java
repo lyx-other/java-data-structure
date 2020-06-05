@@ -81,7 +81,7 @@ class CircleArrayQueue
 	public CircleArrayQueue(int arrMaxSize)
 	{
 		 maxSize = arrMaxSize;
-		arr = new int[maxSize];
+		 arr = new int[maxSize];
 	}
 
 	/**
