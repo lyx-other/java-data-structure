@@ -14,12 +14,11 @@ public class SingleLinkedListDemo
 		singleLinkedList.addByNo(new HeroNode(3, "吴用", "智多星"));
 		singleLinkedList.addByNo(new HeroNode(2, "杨志", "青面兽"));
 		singleLinkedList.addByNo(new HeroNode(4, "晁盖", "托塔天王"));
-
 		singleLinkedList.list();
-
-		singleLinkedList.updateByNo(new HeroNode(4, "大晃盖","托塔大天王"));
-
 		System.out.println("-------------------");
+
+		singleLinkedList.removeByNo(9);
+
 		singleLinkedList.list();
 	}
 }
@@ -88,6 +87,30 @@ class SingleLinkedList
 		// 运行到这里，说明没有添加上，即新的结点比所有结点都大，此时temp指向最后一个节点，在最后一个节点添加上
 		node.next = null;
 		temp.next = node;
+	}
+
+	public void removeByNo(int no)
+	{
+		if (this.isEmpty())
+		{
+			System.out.println("链表为空，无法修改");
+			return;
+		}
+
+		HeroNode current = this.head;
+		while (!Objects.isNull(current.next)) // 如果有下一个节点
+		{
+			if (current.next.no == no) // 和下一节点比较  如果相等，当前结点的下一个就是要被删除的
+			{
+				// 被删除的节点没有任何引用指向它，将自动被GC回收
+				current.next = current.next.next;
+				return;
+			}
+
+			current = current.next;
+		}
+
+		System.out.println("节点不存在，无需删除");
 	}
 
 	// 根据no修改某个节点
