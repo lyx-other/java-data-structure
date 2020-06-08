@@ -2,6 +2,9 @@ package com.lyx.queue;
 
 import java.util.Scanner;
 
+/**
+ * 数组实现环形队列
+ */
 public class CircleArrayQueueDemo
 {
 	public static void main(String[] args)
@@ -71,6 +74,9 @@ public class CircleArrayQueueDemo
 	}
 }
 
+/**
+ * 环形队列
+ */
 class CircleArrayQueue
 {
 	private int maxSize; // 数组的最大容量

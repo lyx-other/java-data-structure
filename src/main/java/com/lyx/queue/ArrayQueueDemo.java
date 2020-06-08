@@ -3,7 +3,7 @@ package com.lyx.queue;
 import java.util.Scanner;
 
 /**
- * 数组模拟队列
+ * 数组实现普通普通队列
  */
 public class ArrayQueueDemo
 {
@@ -74,7 +74,9 @@ public class ArrayQueueDemo
 	}
 }
 
-// 队列（数组模拟）
+/**
+ * 普通队列
+ */
 class ArrayQueue
 {
 	private int maxSize; // 数组的最大容量
