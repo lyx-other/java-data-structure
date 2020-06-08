@@ -150,7 +150,7 @@ class CircleArrayQueue
 			return;
 		}
 
-		int count = (rear+maxSize-front) % maxSize; // 队列中元素的个数
+		int count = (rear-front+maxSize) % maxSize; // 队列中元素的个数
 
 		for (int i = front; i <= front+count-1; i++)
 		{
