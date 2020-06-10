@@ -11,15 +11,17 @@ public class SingleLinkedListDemo
 	{
 		SingleLinkedList singleLinkedList = new SingleLinkedList();
 		singleLinkedList.addByNo(new HeroNode(1, "宋江", "及时雨"));
-		singleLinkedList.addByNo(new HeroNode(3, "吴用", "智多星"));
-		singleLinkedList.addByNo(new HeroNode(2, "杨志", "青面兽"));
+		singleLinkedList.addByNo(new HeroNode(2, "吴用", "智多星"));
+		singleLinkedList.addByNo(new HeroNode(3, "杨志", "青面兽"));
 		singleLinkedList.addByNo(new HeroNode(4, "晁盖", "托塔天王"));
+		singleLinkedList.addByNo(new HeroNode(5, "烬", "戏命师"));
+		singleLinkedList.addByNo(new HeroNode(6, "凯隐", "影流之镰"));
+		singleLinkedList.addByNo(new HeroNode(7, "拉克丝", "光光女郎"));
+		singleLinkedList.addByNo(new HeroNode(8, "慎", "暮光之眼"));
 		singleLinkedList.list();
-		System.out.println("-------------------");
 
-		singleLinkedList.removeByNo(9);
-
-		singleLinkedList.list();
+		System.out.println("节点个数：" + singleLinkedList.count());
+		System.out.println("倒数第5个节点：" + singleLinkedList.reciprocalK(51));
 	}
 }
 
@@ -159,6 +161,41 @@ class SingleLinkedList
 	public boolean isEmpty()
 	{
 		return Objects.isNull(this.head.next);
+	}
+
+
+	/*-------面试题-------*/
+	// 统计一个单链表中元素的个数 不算头结点
+	public int count()
+	{
+		int count = 0;
+
+		HeroNode current = this.head;
+		while (!Objects.isNull(current.next))
+		{
+			current = current.next;
+			count++;
+		}
+
+		return count;
+	}
+
+	// 找倒数第k个结点
+	public HeroNode reciprocalK(int k)
+	{
+		int target = this.count() + 1 - k; // 倒数第k个就是正数 第 count+1-k 个（头结点不算，从1开始编号）
+
+		int n = 0; // 记录是第几个节点
+		HeroNode current = this.head;
+		while (!Objects.isNull(current.next))
+		{
+			current = current.next;
+			n++;
+			if (n == target)
+				return current;
+		}
+
+		return null;
 	}
 }
 
