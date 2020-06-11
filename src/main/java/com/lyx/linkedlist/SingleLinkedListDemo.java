@@ -1,5 +1,8 @@
 package com.lyx.linkedlist;
 
+import org.omg.PortableServer.LIFESPAN_POLICY_ID;
+
+import java.time.chrono.IsoChronology;
 import java.util.Objects;
 import java.util.Stack;
 
@@ -10,23 +13,32 @@ public class SingleLinkedListDemo
 {
 	public static void main(String[] args)
 	{
-		SingleLinkedList singleLinkedList = new SingleLinkedList();
-		singleLinkedList.addByNo(new HeroNode(1, "宋江", "及时雨"));
-		singleLinkedList.addByNo(new HeroNode(2, "吴用", "智多星"));
-		singleLinkedList.addByNo(new HeroNode(3, "杨志", "青面兽"));
-		singleLinkedList.addByNo(new HeroNode(4, "晁盖", "托塔天王"));
-		singleLinkedList.addByNo(new HeroNode(5, "烬", "戏命师"));
-		singleLinkedList.addByNo(new HeroNode(6, "凯隐", "影流之镰"));
-		singleLinkedList.addByNo(new HeroNode(7, "拉克丝", "光辉女郎"));
-		singleLinkedList.addByNo(new HeroNode(8, "慎", "暮光之眼"));
+		SingleLinkedList list1 = new SingleLinkedList();
+		list1.addByNo(new HeroNode(1, "宋江", "及时雨"));
+		list1.addByNo(new HeroNode(2, "吴用", "智多星"));
+		list1.addByNo(new HeroNode(3, "杨志", "青面兽"));
+		list1.addByNo(new HeroNode(4, "晁盖", "托塔天王"));
+		list1.addByNo(new HeroNode(5, "烬", "戏命师"));
+		list1.addByNo(new HeroNode(6, "凯隐", "影流之镰"));
+		list1.addByNo(new HeroNode(11, "拉克丝", "光辉女郎"));
+		list1.addByNo(new HeroNode(88, "慎", "暮光之眼"));
 
-		System.out.println("单向链表初始化完成");
-		singleLinkedList.list();
-		System.out.println("-----------------------");
+		SingleLinkedList list2 = new SingleLinkedList();
+		list2.addByNo(new HeroNode(15, "拉莫斯", "披甲龙龟"));
+		list2.addByNo(new HeroNode(9, "德玛西亚皇子", "嘉文四世"));
 
-		System.out.println("逆序打印");
-		reversePrint2(singleLinkedList);
-		System.out.println("-----------------------");
+
+		System.out.println("单向链表1：");
+		list1.list();
+		System.out.println("--------------");
+
+		System.out.println("单向链表2：");
+		list2.list();
+		System.out.println("--------------");
+
+		System.out.println("合并后的链表：");
+		merge(list1, list2).list();
+		System.out.println("--------------");
 	}
 
 	/*-------------面试题-------------*/
@@ -103,6 +115,29 @@ public class SingleLinkedListDemo
 		while (!stack.isEmpty())
 			System.out.println(stack.pop());
 
+	}
+
+	public static SingleLinkedList merge(SingleLinkedList l1, SingleLinkedList l2)
+	{
+		if (l1.isEmpty() && l2.isEmpty())
+			return new SingleLinkedList();
+
+		// 使用有序的添加方法往里添加就可以了
+		SingleLinkedList linkedList = new SingleLinkedList();
+		HeroNode currentL1 = l1.getHead();
+		while (Objects.nonNull(currentL1.next))
+		{
+			currentL1 = currentL1.next;
+			linkedList.addByNo(new HeroNode(currentL1.no, currentL1.name, currentL1.nickname));
+		}
+		HeroNode currentL2 = l2.getHead();
+		while (Objects.nonNull(currentL2.next))
+		{
+			currentL2 = currentL2.next;
+			linkedList.addByNo(new HeroNode(currentL2.no, currentL2.name, currentL2.nickname));
+		}
+
+		return linkedList;
 	}
 }
 
