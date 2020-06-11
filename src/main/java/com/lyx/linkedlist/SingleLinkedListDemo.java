@@ -1,6 +1,7 @@
 package com.lyx.linkedlist;
 
 import java.util.Objects;
+import java.util.Stack;
 
 /**
  * 单向链表demo
@@ -16,12 +17,92 @@ public class SingleLinkedListDemo
 		singleLinkedList.addByNo(new HeroNode(4, "晁盖", "托塔天王"));
 		singleLinkedList.addByNo(new HeroNode(5, "烬", "戏命师"));
 		singleLinkedList.addByNo(new HeroNode(6, "凯隐", "影流之镰"));
-		singleLinkedList.addByNo(new HeroNode(7, "拉克丝", "光光女郎"));
+		singleLinkedList.addByNo(new HeroNode(7, "拉克丝", "光辉女郎"));
 		singleLinkedList.addByNo(new HeroNode(8, "慎", "暮光之眼"));
-		singleLinkedList.list();
 
-		System.out.println("节点个数：" + singleLinkedList.count());
-		System.out.println("倒数第5个节点：" + singleLinkedList.reciprocalK(51));
+		System.out.println("单向链表初始化完成");
+		singleLinkedList.list();
+		System.out.println("-----------------------");
+
+		System.out.println("逆序打印");
+		reversePrint2(singleLinkedList);
+		System.out.println("-----------------------");
+	}
+
+	/*-------------面试题-------------*/
+	/**
+	 * 获得单向链表中节点的个数(不算头结点)
+	 * @param singleLinkedList 单链表对象，也可以以头结点为参数，一个头节点也可以代表一个单向链表
+	 * @return
+	 */
+	public static int count(SingleLinkedList singleLinkedList)
+	{
+		int result = 0;
+		HeroNode current = singleLinkedList.getHead();
+		while (Objects.nonNull(current.next)) // current 有下一个节点
+		{
+			current = current.next;
+			result++;
+		}
+
+		return result;
+	}
+
+	/**
+	 * 获得单向链表的倒数第k个节点，节点从1开始编号
+	 */
+	public static HeroNode reciprocalK(SingleLinkedList list, int k)
+	{
+		int target = count(list) + 1 - k; // 倒数第k个就是正数 第 count+1-k 个（头结点不算，从1开始编号）
+		int n = 0; // 记录是第几个节点
+		HeroNode current = list.getHead();
+		while (Objects.nonNull(current.next))
+		{
+			current = current.next; // current 被赋值一次 就是一个节点
+			n++;
+			if (n == target)
+				return current;
+		}
+
+		return null;
+	}
+
+	/**
+	 * 逆序打印
+	 * 方式一：反转单链表，打印完后，再返回回来
+	 */
+	public static void reversePrint1(SingleLinkedList list)
+	{
+		list.reverse();
+		list.list();
+		list.reverse();
+	}
+
+	/**
+	 * 逆序打印
+	 * 方式2：使用栈，将单向链表中的节点按顺序压入栈中，利用栈先进后出的特性完成逆序打印
+	 * 这里先使用Java提供的栈
+	 */
+	public static void reversePrint2(SingleLinkedList list)
+	{
+		if (list.isEmpty())
+		{
+			System.out.println("单向链表为空");
+			return;
+		}
+
+		Stack<HeroNode> stack = new Stack<>();
+
+		HeroNode current = list.getHead().next;
+		while (Objects.nonNull(current))
+		{
+			stack.add(current);
+			current = current.next;
+		}
+
+		while (!stack.isEmpty())
+			System.out.println(stack.pop());
+
 	}
 }
 
@@ -36,6 +117,11 @@ class SingleLinkedList
 	public SingleLinkedList()
 	{
 		this.head = new HeroNode(0, null, null);
+	}
+
+	public HeroNode getHead()
+	{
+		return head;
 	}
 
 	// 添加节点，添加到最后
@@ -157,45 +243,37 @@ class SingleLinkedList
 		}
 	}
 
+	// 反转单向链表
+	public void reverse()
+	{
+		if (Objects.isNull(this.head.next) || Objects.isNull(this.head.next.next))
+			return;
+
+		// 运行到这里，单向链表至少有两个节点（不算头节点）
+
+		HeroNode reverseHead = new HeroNode(0, null, null);
+		HeroNode current = this.head.next; // 指向第一个效节点
+		HeroNode currentNext = current.next; // 指向当前节点的下一个节点
+
+		while (Objects.nonNull(current)) // 当前节点不是null
+		{
+			// 把当前节点摘下来，插入到 紧挨reverseHead的后边
+			current.next = reverseHead.next;
+			reverseHead.next = current;
+
+			// 将current 与 currentNext 往后移，此时current已经与后这断开连接了
+			current = currentNext;
+			currentNext = Objects.nonNull(current) ? current.next : null;
+		}
+
+		// 用原先的头节点 替换掉 reverseHead
+		this.head.next = reverseHead.next;
+	}
+
 	// 判断链表是否为空
 	public boolean isEmpty()
 	{
 		return Objects.isNull(this.head.next);
-	}
-
-
-	/*-------面试题-------*/
-	// 统计一个单链表中元素的个数 不算头结点
-	public int count()
-	{
-		int count = 0;
-
-		HeroNode current = this.head;
-		while (!Objects.isNull(current.next))
-		{
-			current = current.next;
-			count++;
-		}
-
-		return count;
-	}
-
-	// 找倒数第k个结点
-	public HeroNode reciprocalK(int k)
-	{
-		int target = this.count() + 1 - k; // 倒数第k个就是正数 第 count+1-k 个（头结点不算，从1开始编号）
-
-		int n = 0; // 记录是第几个节点
-		HeroNode current = this.head;
-		while (!Objects.isNull(current.next))
-		{
-			current = current.next;
-			n++;
-			if (n == target)
-				return current;
-		}
-
-		return null;
 	}
 }
 
@@ -210,8 +288,7 @@ class HeroNode
 	public int no; // 英雄的编号
 	public String name; // 英雄的名字
 	public String nickname; // 英雄的昵称
-
-	// 下一个结点
+	// 下一个结点区
 	public HeroNode next;
 
 	// 构造一个节点(一个英雄)
