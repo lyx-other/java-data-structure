@@ -212,6 +212,7 @@ class SingleLinkedList
 		temp.next = node;
 	}
 
+	// 删除某个节点
 	public void removeByNo(int no)
 	{
 		if (this.isEmpty())
@@ -323,7 +324,7 @@ class HeroNode
 	public int no; // 英雄的编号
 	public String name; // 英雄的名字
 	public String nickname; // 英雄的昵称
-	// 下一个结点区
+	// 下一个结点
 	public HeroNode next;
 
 	// 构造一个节点(一个英雄)
