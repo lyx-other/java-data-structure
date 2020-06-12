@@ -13,32 +13,21 @@ public class SingleLinkedListDemo
 {
 	public static void main(String[] args)
 	{
-		SingleLinkedList list1 = new SingleLinkedList();
-		list1.addByNo(new HeroNode(1, "宋江", "及时雨"));
-		list1.addByNo(new HeroNode(2, "吴用", "智多星"));
-		list1.addByNo(new HeroNode(3, "杨志", "青面兽"));
-		list1.addByNo(new HeroNode(4, "晁盖", "托塔天王"));
-		list1.addByNo(new HeroNode(5, "烬", "戏命师"));
-		list1.addByNo(new HeroNode(6, "凯隐", "影流之镰"));
-		list1.addByNo(new HeroNode(11, "拉克丝", "光辉女郎"));
-		list1.addByNo(new HeroNode(88, "慎", "暮光之眼"));
+		SingleLinkedList linkedList = new SingleLinkedList();
+//		linkedList.addByNo(new HeroNode(1, "宋江", "及时雨"));
+//		linkedList.addByNo(new HeroNode(2, "吴用", "智多星"));
+//		linkedList.addByNo(new HeroNode(3, "杨志", "青面兽"));
+//		linkedList.addByNo(new HeroNode(4, "晁盖", "托塔天王"));
+//		linkedList.addByNo(new HeroNode(5, "烬", "戏命师"));
+//		linkedList.addByNo(new HeroNode(6, "凯隐", "影流之镰"));
+//		linkedList.addByNo(new HeroNode(7, "拉克丝", "光辉女郎"));
+//		linkedList.addByNo(new HeroNode(8, "慎", "暮光之眼"));
 
-		SingleLinkedList list2 = new SingleLinkedList();
-		list2.addByNo(new HeroNode(15, "拉莫斯", "披甲龙龟"));
-		list2.addByNo(new HeroNode(9, "德玛西亚皇子", "嘉文四世"));
-
-
-		System.out.println("单向链表1：");
-		list1.list();
+		System.out.println("单向链表：");
+		linkedList.list();
 		System.out.println("--------------");
 
-		System.out.println("单向链表2：");
-		list2.list();
-		System.out.println("--------------");
-
-		System.out.println("合并后的链表：");
-		merge(list1, list2).list();
-		System.out.println("--------------");
+		System.out.println("元素个数：" + count(linkedList));
 	}
 
 	/*-------------面试题-------------*/
@@ -51,10 +40,16 @@ public class SingleLinkedListDemo
 	{
 		int result = 0;
 		HeroNode current = singleLinkedList.getHead();
-		while (Objects.nonNull(current.next)) // current 有下一个节点
+
+		if (Objects.isNull(current.next))
+			return result;
+
+		while (true)
 		{
 			current = current.next;
 			result++;
+			if (Objects.isNull(current.next))
+				break;
 		}
 
 		return result;
