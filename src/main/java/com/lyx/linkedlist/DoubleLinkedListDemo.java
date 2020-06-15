@@ -13,7 +13,7 @@ public class DoubleLinkedListDemo
 
 		doubleLinkedList.list();
 
-		doubleLinkedList.delete(9);
+		doubleLinkedList.delete(3);
 
 		doubleLinkedList.list();
 	}
