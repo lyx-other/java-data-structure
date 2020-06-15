@@ -12,6 +12,10 @@ public class DoubleLinkedListDemo
 		doubleLinkedList.add(new LOLHero(3,"战争之影","赫卡里姆"));
 
 		doubleLinkedList.list();
+
+		doubleLinkedList.delete(9);
+
+		doubleLinkedList.list();
 	}
 }
 
@@ -38,6 +42,72 @@ class DoubleLinkedList
 		node.pre = current;
 	}
 
+	// 根据 no 删除某个节点，返回删除的节点
+	public LOLHero delete(int no)
+	{
+		if (this.isEmpty())
+		{
+			System.out.println("链表为空");
+			return null;
+		}
+
+		LOLHero curr = head;
+		while (true)
+		{
+			curr = curr.next;
+
+			if (curr.no == no)
+			{
+				if (Objects.isNull(curr.next)) // 删除的是最后一个节点
+				{
+					curr.pre.next = null; // curr.net
+
+					curr.pre = null;
+					return curr;
+				}
+				else // 删除的不是最后一个节点
+				{
+					curr.pre.next = curr.next;
+					curr.next.pre = curr.pre;
+
+					curr.next = null;
+					curr.pre = null;
+					return curr;
+				}
+			}
+
+			if (Objects.isNull(curr.next))
+				break;
+		}
+
+		System.out.println("节点不存在");
+		return null;
+	}
+
+	// 修改某个节点 根据节点的no值，会修改第1个
+	public void change(LOLHero node)
+	{
+		if (isEmpty())
+		{
+			System.out.println("链表为空，无法修改");
+			return;
+		}
+
+		LOLHero curr = head;
+		while (true)
+		{
+			curr = curr.next;
+			if (curr.no == node.no)
+			{
+				curr.name = node.name;
+				curr.nickname = node.nickname;
+			}
+
+			if (Objects.isNull(curr.next)) // 最后一个节点
+				break;
+		}
+	}
+
 	// 双向链表的遍历
 	public void list()
 	{
@@ -53,12 +123,13 @@ class DoubleLinkedList
 			current = current.next;
 			System.out.println(current);
 		}
+		System.out.println("------------------------");
 	}
 
 	// 判断列表是否为空
 	public boolean isEmpty()
 	{
-		return Objects.isNull(this.head.next);
+		return Objects.isNull(head.next);
 	}
 }
 
