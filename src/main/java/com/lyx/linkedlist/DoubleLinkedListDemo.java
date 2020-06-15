@@ -42,6 +42,28 @@ class DoubleLinkedList
 		node.pre = current;
 	}
 
+	// 根据no大小添加节点，从小到大添加，如果存在，添加失败
+	public void addByNo(LOLHero node)
+	{
+		if (this.isEmpty())
+		{
+			head.next = node;
+			node.pre = head;
+			return;
+		}
+
+		LOLHero curr = head;
+		while (true)
+		{
+			curr = curr.next;
+
+
+
+			if (Objects.isNull(curr.next))
+				break;
+		}
+	}
+
 	// 根据 no 删除某个节点，返回删除的节点
 	public LOLHero delete(int no)
 	{
