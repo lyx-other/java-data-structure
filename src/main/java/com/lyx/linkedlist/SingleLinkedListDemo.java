@@ -14,20 +14,24 @@ public class SingleLinkedListDemo
 	public static void main(String[] args)
 	{
 		SingleLinkedList linkedList = new SingleLinkedList();
-//		linkedList.addByNo(new HeroNode(1, "宋江", "及时雨"));
-//		linkedList.addByNo(new HeroNode(2, "吴用", "智多星"));
-//		linkedList.addByNo(new HeroNode(3, "杨志", "青面兽"));
-//		linkedList.addByNo(new HeroNode(4, "晁盖", "托塔天王"));
-//		linkedList.addByNo(new HeroNode(5, "烬", "戏命师"));
-//		linkedList.addByNo(new HeroNode(6, "凯隐", "影流之镰"));
-//		linkedList.addByNo(new HeroNode(7, "拉克丝", "光辉女郎"));
-//		linkedList.addByNo(new HeroNode(8, "慎", "暮光之眼"));
+		linkedList.addByNo(new HeroNode(1, "宋江", "及时雨"));
+		linkedList.addByNo(new HeroNode(2, "吴用", "智多星"));
+		linkedList.addByNo(new HeroNode(3, "杨志", "青面兽"));
+		linkedList.addByNo(new HeroNode(4, "晁盖", "托塔天王"));
+		linkedList.addByNo(new HeroNode(5, "烬", "戏命师"));
+		linkedList.addByNo(new HeroNode(6, "凯隐", "影流之镰"));
+		linkedList.addByNo(new HeroNode(7, "拉克丝", "光辉女郎"));
+		linkedList.addByNo(new HeroNode(8, "慎", "暮光之眼"));
 
 		System.out.println("单向链表：");
 		linkedList.list();
 		System.out.println("--------------");
 
-		System.out.println("元素个数：" + count(linkedList));
+		linkedList.reverse();
+
+		System.out.println("单向链表：");
+		linkedList.list();
+		System.out.println("--------------");
 	}
 
 	/*-------------面试题-------------*/
@@ -277,28 +281,31 @@ class SingleLinkedList
 	// 反转单向链表
 	public void reverse()
 	{
+		// 至少有两个节点（不算头节点）
 		if (Objects.isNull(this.head.next) || Objects.isNull(this.head.next.next))
 			return;
 
-		// 运行到这里，单向链表至少有两个节点（不算头节点）
-
 		HeroNode reverseHead = new HeroNode(0, null, null);
-		HeroNode current = this.head.next; // 指向第一个效节点
-		HeroNode currentNext = current.next; // 指向当前节点的下一个节点
 
-		while (Objects.nonNull(current)) // 当前节点不是null
+		HeroNode current = head;
+		HeroNode currentNext = current.next;
+
+		while (true)
 		{
+			// 两个辅助指针都往后移一位 后边紧挨着处理，后移一次 就处理一次
+			current = currentNext;
+			currentNext = currentNext.next;
+
 			// 把当前节点摘下来，插入到 紧挨reverseHead的后边
 			current.next = reverseHead.next;
 			reverseHead.next = current;
 
-			// 将current 与 currentNext 往后移，此时current已经与后这断开连接了
-			current = currentNext;
-			currentNext = Objects.nonNull(current) ? current.next : null;
+			if (Objects.isNull(currentNext)) // currentNext 为 null ，说明current移动到了最后一个节点，就不往后再移动了
+				break;
 		}
 
 		// 用原先的头节点 替换掉 reverseHead
-		this.head.next = reverseHead.next;
+		head.next = reverseHead.next;
 	}
 
 	// 判断链表是否为空
