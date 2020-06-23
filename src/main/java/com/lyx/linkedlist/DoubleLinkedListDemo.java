@@ -57,8 +57,6 @@ class DoubleLinkedList
 		{
 			curr = curr.next;
 
-
-
 			if (Objects.isNull(curr.next))
 				break;
 		}
