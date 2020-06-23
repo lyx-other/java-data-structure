@@ -9,7 +9,7 @@ public class DoubleLinkedListDemo
 		DoubleLinkedList doubleLinkedList = new DoubleLinkedList();
 		doubleLinkedList.addByNo(new LOLHero(9,"拉莫斯","披甲龙龟"));
 		doubleLinkedList.addByNo(new LOLHero(2,"巨魔之王","特朗德尔"));
-		doubleLinkedList.addByNo(new LOLHero(3,"战争之影","赫卡里姆"));
+//		doubleLinkedList.addByNo(new LOLHero(3,"战争之影","赫卡里姆"));
 
 		doubleLinkedList.list();
 	}
@@ -63,6 +63,7 @@ class DoubleLinkedList
 				break;
 		}
 
+		curr = head;
 		while (true)
 		{
 			curr = curr.next;
