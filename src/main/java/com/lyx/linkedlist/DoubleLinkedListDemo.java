@@ -7,13 +7,9 @@ public class DoubleLinkedListDemo
 	public static void main(String[] args)
 	{
 		DoubleLinkedList doubleLinkedList = new DoubleLinkedList();
-		doubleLinkedList.add(new LOLHero(1,"拉莫斯","披甲龙龟"));
-		doubleLinkedList.add(new LOLHero(2,"巨魔之王","特朗德尔"));
-		doubleLinkedList.add(new LOLHero(3,"战争之影","赫卡里姆"));
-
-		doubleLinkedList.list();
-
-		doubleLinkedList.delete(3);
+		doubleLinkedList.addByNo(new LOLHero(9,"拉莫斯","披甲龙龟"));
+		doubleLinkedList.addByNo(new LOLHero(2,"巨魔之王","特朗德尔"));
+		doubleLinkedList.addByNo(new LOLHero(3,"战争之影","赫卡里姆"));
 
 		doubleLinkedList.list();
 	}
@@ -57,9 +53,35 @@ class DoubleLinkedList
 		{
 			curr = curr.next;
 
+			if (curr.no == node.no)
+			{
+				System.out.println("此编号已经存在，不可以添加");
+				return;
+			}
+
 			if (Objects.isNull(curr.next))
 				break;
 		}
+
+		while (true)
+		{
+			curr = curr.next;
+			if (node.no < curr.no) // 比curr小，就应该添加到curr前边
+			{
+				curr.pre.next = node;
+				node.next = curr;
+				node.pre = curr.pre;
+				curr.pre = node;
+
+				break;
+			}
+			if (Objects.isNull(curr.next))
+				break;
+		}
+
+		// 因是到了最后一个跳出循环，说明比所有的都大，在最后边添加
+		curr.next = node;
+		node.pre = curr;
 	}
 
 	// 根据 no 删除某个节点，返回删除的节点
